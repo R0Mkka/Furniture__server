@@ -1,0 +1,112 @@
+extends ../layouts/admin-layout.pug
+
+block title
+    title Отзывы
+
+block adminStyles
+    link(rel="stylesheet", href="/styles/admin-feedbacks.css")
+
+block adminPageContent
+    if error
+        div.error-section
+            h1.error-section__headline Ошибка!
+            input.error-section__message(type="text" value=error.message readonly)
+    else
+        section.feedbacks
+            div.feedbacks__header
+                form(action="/admin/feedbacks" method="GET")
+                    select.feedbacks__header-filter(name="filter" onchange="this.form.submit()")
+                        option(value="all" selected=filter === "all") Все
+                        option(value="archived" selected=filter === "archived") Неопубликованные
+                        option(value="published" selected=filter === "published") Опубликованные
+
+            ul.feedbacks__list
+                if feedbacks && feedbacks.length !== 0
+                    each feedbackItem in feedbacks
+                        li.feedbacks__list-item.feedback-card
+                            input.feedback-card__id(type="text" name="id" value=feedbackItem.id hidden disabled)
+                            div.feedback-card__content
+                                div.feedback-card__content-section.feedback-card__author
+                                    strong Автор:
+                                    span #{feedbackItem.firstName} #{feedbackItem.lastName}
+                                div.feedback-card__content-section.feedback-card__email
+                                    strong Email:
+                                    span #{feedbackItem.email || "-"}
+                                div.feedback-card__content-section.feedback-card__text
+                                    strong Текст отзыва:
+                                    span #{feedbackItem.feedbackText}
+                                div.feedback-card__content-section.feedback-card__added-at
+                                    strong Добавлен:
+                                    span #{moment(feedbackItem.addedAt).format("YYYY/MM/DD hh:mm:ss")}
+
+                            div.feedback-card__actions
+                                if feedbackItem.isPublished
+                                    div.feedback-card__actions-item.archive(title="Заархивировать")
+                                        svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
+                                            path(d="M0 0h24v24H0z" fill="none")
+                                            path(d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z")
+                                else
+                                    div.feedback-card__actions-item.publish(title="Опубликовать")
+                                        svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
+                                            path(d="M0 0h24v24H0z" fill="none")
+                                            path(d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z")
+                                div.feedback-card__actions-item.delete(title="Удалить")
+                                    svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
+                                        path(d="M0 0h24v24H0z" fill="none")
+                                        path(d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z")
+
+                else
+                    li.feedbacks__list-item.empty
+                        span (пусто)
+
+        script.
+            const feedbacksList = document.querySelector('ul.feedbacks__list');
+
+            feedbacksList.addEventListener('click', (event) => {
+                const { target } = event;
+                const { classList } = target;
+                const filter = "#{filter}";
+
+                if (!classList.contains('feedback-card__actions-item')) {
+                    return;
+                }
+
+                const feedbackId = target.parentElement.parentElement.firstChild.value;
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+                    body: JSON.stringify({ id: feedbackId, filter }),
+                };
+
+                if (classList.contains('delete')) {
+                    const isConfirmed = confirm('Вы уверены, что хотите удалить отзыв? Данное действие необратимо.');
+
+                    if (!isConfirmed) {
+                        return;
+                    }
+
+                    return fetch('http://localhost:3000/admin/feedbacks/delete', requestOptions)
+                        .then(handleSuccess, handleError);
+                }
+
+                if (classList.contains('publish')) {
+                    return fetch('http://localhost:3000/admin/feedbacks/publish', requestOptions)
+                        .then(handleSuccess, handleError);
+                }
+
+                if (classList.contains('archive')) {
+                    return fetch('http://localhost:3000/admin/feedbacks/archive', requestOptions)
+                        .then(handleSuccess, handleError);
+                }
+
+                function handleSuccess() {
+                    window.location.reload();
+                }
+
+                function handleError(error) {
+                    const errorBlock = document.createElement('div');
+                    errorBlock.textContent = `Во время запроса произошла ошибка: ${error.message}`;
+                    errorBlock.style.color = 'orangered';
+                    document.body.prepend(errorBlock);
+                }
+            });

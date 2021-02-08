@@ -1,0 +1,30 @@
+extends ../layouts/admin-layout.pug
+
+block title
+    title Статистика
+
+block adminStyles
+    link(rel="stylesheet", href="/styles/admin-statistics.css")
+
+block adminPageContent
+    //-TODO
+    if error
+        div.error-section
+            h1.error-section__headline Ошибка!
+            input.error-section__message(type="text" value=error.message readonly)
+    else
+        section.statistics
+            div.statistics__header
+
+            div.statistics__content
+                div.statistics__views
+                    if todaysEntries
+                        p Количество просмотров: #{todaysEntries.length}
+                    else
+                        p Количество просмотров: 0
+
+                div.statistics__visitors
+                    if uniqueTodaysEntries
+                        p Количество посетителей: #{uniqueTodaysEntries.length}
+                    else
+                        p Количество посетителей: 0

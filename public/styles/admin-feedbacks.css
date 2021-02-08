@@ -1,0 +1,82 @@
+.feedbacks {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.feedbacks__header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    height: 60px;
+    padding: 0 20px;
+}
+
+.feedbacks__list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 0 20px;
+    overflow-y: auto;
+}
+
+.feedbacks__list-item.empty {
+    margin: 10px auto;
+}
+
+.feedback-card {
+    display: flex;
+    margin: 5px 0;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-card__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.feedback-card__content strong {
+    margin-right: 5px;
+}
+
+.feedback-card__content-section {
+    margin: 4px 0;
+}
+
+.feedback-card__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 26px;
+    margin-left: 20px;
+}
+
+.feedback-card__actions-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback-card__actions-item svg {
+    pointer-events: none;
+    width: 26px;
+    height: 26px;
+}
+
+.feedback-card__actions-item:hover svg {
+    fill: var(--primary);
+}
+
+.feedback-card__actions-item.delete:hover svg {
+    fill: var(--error);
+}

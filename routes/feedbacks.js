@@ -4,12 +4,6 @@ const feedbacksRouter = express.Router();
 const feedbacksService = require('../services/feedbacks-service');
 
 feedbacksRouter.get('/', (req, res) => {
-    if (req.query) {
-        return feedbacksService
-            .getFilteredFeedbacks(req.query)
-            .then(filteredNotes => res.status(200).send(filteredNotes));
-    }
-
     feedbacksService
         .getAllFeedbacks()
         .then(allNotes => res.status(200).send(allNotes));

@@ -1,0 +1,23 @@
+extends layout.pug
+
+block title
+
+block styles
+    link(rel="stylesheet", href="/styles/admin.css")
+    block adminStyles
+
+block pageContent
+    header.header
+        h1.header__title Административная панель
+
+        form.header__actions(action="/logout" method="GET")
+            input.header__actions-item.button.button_primary(type="submit" value="Выйти")
+
+    nav.navigation
+        a.navigation__link(href="/admin") Главная
+        a.navigation__link(href="/admin/feedbacks") Отзывы
+        a.navigation__link(href="/admin/statistics") Статистика
+
+    block adminPageContent
+
+    script(src="/scripts/admin-layout.js")
