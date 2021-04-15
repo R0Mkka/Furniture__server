@@ -5,7 +5,7 @@
     height: 80px;
     padding: 0 20px;
     color: var(--white);
-    background-color: var(--primary);
+    background-color: var(--primary-background);
 }
 
 .header__title {
@@ -15,10 +15,6 @@
 .header__actions {
     flex-shrink: 0;
     margin-left: 20px;
-}
-
-.header__actions-item {
-    
 }
 
 .navigation {

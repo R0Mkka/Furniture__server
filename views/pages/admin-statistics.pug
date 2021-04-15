@@ -7,7 +7,6 @@ block adminStyles
     link(rel="stylesheet", href="/styles/admin-statistics.css")
 
 block adminPageContent
-    //-TODO
     if error
         div.error-section
             h1.error-section__headline Ошибка!
@@ -15,16 +14,17 @@ block adminPageContent
     else
         section.statistics
             div.statistics__header
+                h1 За сегодня
 
             div.statistics__content
-                div.statistics__views
+                div.statistics__content-block.statistics__views
                     if todaysEntries
-                        p Количество просмотров: #{todaysEntries.length}
+                        p Просмтров: #{todaysEntries.length}
                     else
-                        p Количество просмотров: 0
+                        p Просмтров: 0
 
-                div.statistics__visitors
+                div.statistics__content-block.statistics__visitors
                     if uniqueTodaysEntries
-                        p Количество посетителей: #{uniqueTodaysEntries.length}
+                        p Уникальных посетителей: #{uniqueTodaysEntries.length}
                     else
-                        p Количество посетителей: 0
+                        p Уникальных посетителей: 0

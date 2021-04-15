@@ -41,19 +41,28 @@ block adminPageContent
 
                             div.feedback-card__actions
                                 if feedbackItem.isPublished
-                                    div.feedback-card__actions-item.archive(title="Заархивировать")
-                                        svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
-                                            path(d="M0 0h24v24H0z" fill="none")
-                                            path(d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z")
+                                    div.feedback-card__actions-item(title="Заархивировать")
+                                        span.feedback-card__actions-item-label Заархивировать
+
+                                        button.feedback-card__actions-item-button.archive
+                                            svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
+                                                path(d="M0 0h24v24H0z" fill="none")
+                                                path(d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z")
                                 else
-                                    div.feedback-card__actions-item.publish(title="Опубликовать")
+                                    div.feedback-card__actions-item(title="Опубликовать")
+                                        span.feedback-card__actions-item-label Опубликовать
+
+                                        button.feedback-card__actions-item-button.publish
+                                            svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
+                                                path(d="M0 0h24v24H0z" fill="none")
+                                                path(d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z")
+                                div.feedback-card__actions-item(title="Удалить")
+                                    span.feedback-card__actions-item-label Удалить
+
+                                    button.feedback-card__actions-item-button.delete
                                         svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
                                             path(d="M0 0h24v24H0z" fill="none")
-                                            path(d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z")
-                                div.feedback-card__actions-item.delete(title="Удалить")
-                                    svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px")
-                                        path(d="M0 0h24v24H0z" fill="none")
-                                        path(d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z")
+                                            path(d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z")
 
                 else
                     li.feedbacks__list-item.empty
@@ -67,11 +76,11 @@ block adminPageContent
                 const { classList } = target;
                 const filter = "#{filter}";
 
-                if (!classList.contains('feedback-card__actions-item')) {
+                if (!classList.contains('feedback-card__actions-item-button')) {
                     return;
                 }
 
-                const feedbackId = target.parentElement.parentElement.firstChild.value;
+                const feedbackId = target.parentElement.parentElement.parentElement.firstChild.value;
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json;charset=utf-8' },

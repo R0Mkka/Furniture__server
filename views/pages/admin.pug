@@ -3,5 +3,10 @@ extends ../layouts/admin-layout.pug
 block title
     title Административная панель | Мебель Полоцк/Новополоцк
 
+block adminStyles
+    link(rel="stylesheet", href="/styles/admin-main.css")
+
 block adminPageContent
-    h1 Главная
+    section.main
+        div.main__header
+            h1 Главная

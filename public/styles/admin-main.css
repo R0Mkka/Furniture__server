@@ -1,0 +1,14 @@
+section.main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.main__header {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}

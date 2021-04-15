@@ -23,10 +23,6 @@
     padding: 0 20px;
 }
 
-.statistics__views {
-
-}
-
-.statistics__visitors {
-
+.statistics__content-block {
+    margin-bottom: 15px;
 }

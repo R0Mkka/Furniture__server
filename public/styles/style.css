@@ -5,7 +5,8 @@
     --white: #ffffff;
     --black: #000000;
     --disabled: #aaaaaa;
-    --primary: #b4ce59;
+    --primary: #ebb331;
+    --primary-background: #38373a;
     --error: orangered;
 }
 
@@ -53,6 +54,15 @@ a {
     text-decoration: none;
 }
 
+button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}
+
 .page {
     display: flex;
     flex-direction: column;
@@ -70,7 +80,7 @@ a {
     margin: auto;
     padding: 20px;
     color: var(--white);
-    background-color: var(--primary);
+    background-color: var(--primary-background);
     border-radius: 6px;
 }
 
@@ -152,12 +162,13 @@ a {
 
 .button {
     cursor: pointer;
+    position: relative;
     display: flex;
     align-items: center;
     height: 30px;
     padding: 0 20px;
-    color: var(--black);
-    background-color: var(--white);
+    color: var(--white);
+    background-color: var(--primary);
     border: 2px solid transparent;
     border-radius: 6px;
 }
@@ -172,5 +183,5 @@ a {
 }
 
 .button:active {
-    color: var(--primary);
+    top: 2px;
 }
